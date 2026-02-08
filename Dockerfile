@@ -34,7 +34,9 @@ RUN curl -fsSL https://nodejs.org/dist/v18.20.1/node-v18.20.1-linux-x64.tar.xz -
 # -----------------------------------------------
 # Instalar Composer globalmente
 # -----------------------------------------------
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- \
+    --install-dir=/usr/local/bin \
+    --filename=composer
 
 # -----------------------------------------------
 # Establecer directorio de trabajo
