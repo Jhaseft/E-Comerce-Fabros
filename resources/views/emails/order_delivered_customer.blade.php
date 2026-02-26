@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Tu pedido fue entregado</title>
+    <title>Tu pedido está listo para retirar</title>
 </head>
 
 <body style="margin:0; padding:0; background-color:#f2f2f2; font-family:Arial, sans-serif;">
@@ -28,11 +28,11 @@
 
                         <!-- Título -->
                         <h2 style="text-align:center; color:#ffffff; margin-bottom:8px;">
-                            ¡Gracias por tu compra, {{ $order->customer_name }}!
+                            ¡Tu pedido está listo, {{ $order->customer_name }}!
                         </h2>
 
                         <p style="text-align:center; color:#cccccc; margin-bottom:25px;">
-                            Tu pedido ha sido <strong>entregado correctamente</strong>.
+                            Tu pedido está <strong>listo para ser retirado</strong>.
                         </p>
 
                         <!-- Pedido -->
@@ -106,6 +106,7 @@
 
                         <!-- Footer -->
                         <p style="margin-top:30px; text-align:center; color:#bfbfbf; font-size:13px;">
+                            Puedes pasar a recogerlo en nuestro punto de retiro.<br><br>
                             ¡Esperamos verte pronto nuevamente! 🤍<br>
                             <strong style="color:#ffffff;">Maro</strong>
                         </p>
