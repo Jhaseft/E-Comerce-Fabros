@@ -30,13 +30,13 @@ export default function ParteArriba() {
   ];
 
   return (
-    <div className="w-full animate-blurred-fade-in bg-black border-b border-gray-800">
+    <div className="w-full animate-blurred-fade-in bg-brandBlue border-b border-brandLight/30">
       <div className="container mx-auto px-6 py-3">
         <div className="flex justify-between items-center">
           
        
           <div className="flex items-center gap-1">
-            <span className="text-gray-400 text-xs font-medium mr-3 hidden sm:inline">
+            <span className="text-brandLight text-xs font-medium mr-3 hidden sm:inline">
               Síguenos:
             </span>
             {socialLinks.map((social) => (
@@ -45,7 +45,7 @@ export default function ParteArriba() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative p-2 text-gray-400 hover:text-white transition-all duration-300"
+                className="group relative p-2 text-brandLight hover:text-white transition-all duration-300"
                 aria-label={social.name}
               >
               
@@ -66,13 +66,13 @@ export default function ParteArriba() {
 
          
           <a
-            href="mailto:pragatimotorsBL@gmail.com"
-            className="group hidden md:flex items-center gap-2 text-gray-400 hover:text-white transition-all duration-300"
+            href="mailto:info@fabros.com.bo"
+            className="group hidden md:flex items-center gap-2 text-brandLight hover:text-white transition-all duration-300"
           >
-            
-            <div className="relative p-1.5 bg-gray-800 rounded-md group-hover:bg-white transition-colors duration-300">
-              <svg 
-                className="w-3.5 h-3.5 text-gray-400 group-hover:text-black transition-colors duration-300" 
+
+            <div className="relative p-1.5 bg-white/10 rounded-md group-hover:bg-white transition-colors duration-300">
+              <svg
+                className="w-3.5 h-3.5 text-brandLight group-hover:text-brandBlue transition-colors duration-300" 
                 fill="currentColor" 
                 viewBox="0 0 20 20"
               >
@@ -83,7 +83,7 @@ export default function ParteArriba() {
             
             
             <span className="text-sm font-medium tracking-wide">
-             pragatimotorsBL@gmail.com
+             info@fabros.com.bo
             </span>
             
             
@@ -99,8 +99,8 @@ export default function ParteArriba() {
 
          
           <a
-            href="mailto:pragatimotorsBL@gmail.com"
-            className="md:hidden p-2 text-gray-400 hover:text-white transition-colors duration-300"
+            href="mailto:info@fabros.com.bo"
+            className="md:hidden p-2 text-brandLight hover:text-white transition-colors duration-300"
             aria-label="Email"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -112,7 +112,7 @@ export default function ParteArriba() {
       </div>
 
      
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
+      <div className="h-px bg-gradient-to-r from-transparent via-brandLight/40 to-transparent"></div>
     </div>
   );
 }

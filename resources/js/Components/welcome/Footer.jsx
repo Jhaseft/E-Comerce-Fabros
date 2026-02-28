@@ -30,9 +30,9 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-black text-white mt-1">
-      
-      <div className="border-t border-gray-800">
+    <footer className="bg-brandBlue text-white mt-1">
+
+      <div className="border-t border-brandLight/20">
         <div className="container mx-auto px-6 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             
@@ -41,7 +41,7 @@ export default function Footer() {
              
               <div className="flex items-center gap-4">
                 <img
-                  src="https://res.cloudinary.com/dnbklbswg/image/upload/v1767750866/pragatilogo_cw8xso.jpg"
+                  src="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg"
                   alt="Pragbati | Nibol Logo"
                   className="h-16 w-auto "
                   onError={(e) => {
@@ -51,18 +51,18 @@ export default function Footer() {
                 />
                
                 <div className="hidden">
-                  <h3 className="text-2xl font-black tracking-tight">PRAGBATI</h3>
-                  <p className="text-sm text-gray-400">| NIBOL</p>
+                  <h3 className="text-2xl font-black tracking-tight">FABROS</h3>
+                  <p className="text-sm text-brandLight">Bolivia</p>
                 </div>
               </div>
 
-              <p className="text-gray-300 text-lg leading-relaxed max-w-xl">
-                <span className="font-bold text-white">PRAGATI</span> el líder en la fabricación de 
-                vehículos comerciales y de carga, ahora con el respaldo de{' '}
-                <span className="font-bold text-white">NIBOL Ltda</span> como 
-                representante oficial para brindar asesoramiento y soporte técnico, 
-                trabajando arduamente para garantizar la satisfacción total de nuestros clientes 
-                en todo Bolivia.
+              <p className="text-brandLight text-lg leading-relaxed max-w-xl">
+                <span className="font-bold text-white">FABROS</span> es representante oficial en Bolivia de{' '}
+                <span className="font-bold text-white">DongFeng Motors</span> y sus marcas{' '}
+                <span className="font-bold text-white">ZNA</span> y{' '}
+                <span className="font-bold text-white">Yutong Buses</span>.{' '}
+                Con más de 15 años de experiencia, nuestro equipo de asesores está listo para
+                acompañarte en la adquisición de tu vehículo ideal en todo Bolivia.
               </p>
 
               
@@ -84,16 +84,16 @@ export default function Footer() {
       </div>
 
       
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
+      <div className="h-px bg-gradient-to-r from-transparent via-brandLight/40 to-transparent"></div>
 
       
-      <div className="bg-black border-t border-gray-900">
+      <div className="bg-brandBlue border-t border-brandLight/20">
         <div className="container mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             
             
-            <div className="text-gray-400 text-sm text-center md:text-left">
-              <p>Copyright © <span className="font-bold text-white">Pragati Bolivia</span> {new Date().getFullYear()} – Todos los derechos reservados</p>
+            <div className="text-brandLight text-sm text-center md:text-left">
+              <p>Copyright © <span className="font-bold text-white">Fabros Bolivia</span> {new Date().getFullYear()} – Todos los derechos reservados</p>
               <p className="mt-1 text-xs">
                 <a href="#" className="hover:text-white transition-colors">Política de privacidad</a>
                 {' • '}
@@ -103,7 +103,7 @@ export default function Footer() {
 
           
             <div className="flex items-center gap-6">
-              <span className="text-gray-400 text-sm font-medium hidden sm:inline">Síguenos:</span>
+              <span className="text-brandLight text-sm font-medium hidden sm:inline">Síguenos:</span>
               <div className="flex gap-3">
                 {socialLinks.map((social) => (
                   <a
@@ -111,10 +111,10 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative w-11 h-11 rounded-full bg-gray-900 flex items-center justify-center hover:bg-white transition-all duration-300 transform hover:scale-110"
+                    className="group relative w-11 h-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-white transition-all duration-300 transform hover:scale-110"
                     aria-label={social.name}
                   >
-                    <div className="text-white group-hover:text-black transition-colors duration-300">
+                    <div className="text-white group-hover:text-brandBlue transition-colors duration-300">
                       {social.icon}
                     </div>
                     

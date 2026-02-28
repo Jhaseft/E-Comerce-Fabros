@@ -26,6 +26,10 @@ export default {
                 grayCustom: '#939191',    // Gris
                 turquoise: '#01a387',     // Turquesa vivido
                 darkTurquoise: '#165a4e', // Turquesa oscuro
+
+                /* Paleta Pragati */
+                brandBlue: '#02478f',     // Azul principal
+                brandLight: '#9ab7ca',    // Azul claro
             },
         },
     },

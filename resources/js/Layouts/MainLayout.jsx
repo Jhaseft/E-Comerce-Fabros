@@ -3,7 +3,7 @@ import Header from '@/Components/welcome/Header';
 import Footer from '@/Components/welcome/Footer';
 import { CartProvider } from '@/Contexts/CartContext';
 
-export default function Layout({ title, auth, children }) {
+export default function Layout({ title, auth, children,categories ,hasMore }) {
 
 
   return (

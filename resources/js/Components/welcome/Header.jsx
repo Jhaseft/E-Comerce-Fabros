@@ -1,61 +1,65 @@
-import { Link} from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import ParteArriba from './Header/partearriba';
 import NavLink from './Header/Navlink';
 
 export default function Header() {
+  const { navCategories = [], auth } = usePage().props;
+  const user = auth?.user;
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const NAV_LINKS = [
-    { href: '/', label: 'Nosotros' },
-    { href: '/Productos', label: 'Productos' },
-    { href: '/Post-Venta', label: 'Post-Venta' },
-    { href: '/Financiamiento', label: 'Financiamiento' },
-    { href: '/Sucursales', label: 'Sucursales' },
-    { href: '/Noticias', label: 'Noticias' },
-  ];
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <>
-      <ParteArriba/>
-       <header
-        className={`w-full animate-blurred-fade-in bg-white shadow-md transition-all duration-300 sticky top-0 z-50 ${
+      <ParteArriba />
+      <header
+        className={`w-full animate-blurred-fade-in bg-brandBlue shadow-md transition-all duration-300 sticky top-0 z-50 ${
           isScrolled ? 'py-2' : 'py-4'
         }`}
       >
         <div className="container mx-auto flex justify-between items-center px-6">
-       
+
+        
           <Link href="/" className="flex items-center">
             <img
-              src="https://res.cloudinary.com/dnbklbswg/image/upload/v1767750866/pragatilogo_cw8xso.jpg"
-              alt="Pragbati | Nibol Logo"
+              src="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg"
+              alt="Pragati | Nibol Logo"
               className={`transition-all duration-300 object-contain ${
                 isScrolled ? 'h-12 w-32 md:h-14 md:w-40' : 'h-16 w-40 md:h-20 md:w-56'
               }`}
             />
           </Link>
 
-     
-          <nav className="hidden lg:flex items-center gap-8 font-semibold text-gray-700">
-            {NAV_LINKS.map((link) => (
-              <NavLink key={link.href} href={link.href}>
-                {link.label}
+          {/* Desktop Nav: categorías como navlinks + botón login */}
+          <nav className="hidden lg:flex items-center gap-8 font-semibold text-white">
+            {navCategories.map((cat) => (
+              <NavLink key={cat.id} href={`/products/${cat.slug}`}>
+                {cat.name}
               </NavLink>
             ))}
+
+            {user ? (
+              <span className="text-sm font-semibold text-white">{user.name}</span>
+            ) : (
+              <Link
+                href="/login"
+                className="flex items-center gap-2 bg-white text-brandBlue px-5 py-2 rounded-lg text-sm font-semibold hover:bg-brandLight transition-colors duration-300"
+              >
+                Iniciar sesión
+              </Link>
+            )}
           </nav>
 
-    
+     
           <button
-            className="lg:hidden text-gray-700 hover:text-black transition-colors"
+            className="lg:hidden text-white hover:text-brandLight transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -71,23 +75,33 @@ export default function Header() {
           </button>
         </div>
 
-       
+
         <div
           className={`lg:hidden overflow-hidden transition-all duration-300 ${
-            mobileMenuOpen ? 'max-h-96 border-t border-gray-200' : 'max-h-0'
+            mobileMenuOpen ? 'max-h-screen border-t border-brandLight/30' : 'max-h-0'
           }`}
         >
-          <nav className="container mx-auto px-6 py-4 flex flex-col gap-4">
-            {NAV_LINKS.map((link) => (
+          <nav className="container mx-auto px-6 py-4 flex flex-col gap-3">
+            {navCategories.map((cat) => (
               <Link
-                key={link.href}
-                href={link.href}
-                className="text-gray-700 hover:text-black font-semibold transition-colors py-2"
+                key={cat.id}
+                href={`/products/${cat.slug}`}
+                className="text-white hover:text-brandLight font-semibold transition-colors py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                {link.label}
+                {cat.name}
               </Link>
             ))}
+
+            {!user && (
+              <Link
+                href="/login"
+                className="mt-2 flex items-center justify-center bg-white text-brandBlue px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-brandLight transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Iniciar sesión
+              </Link>
+            )}
           </nav>
         </div>
       </header>
