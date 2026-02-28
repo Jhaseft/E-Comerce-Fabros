@@ -12,15 +12,14 @@ class Product extends Model
         'description',
         'longDescription',
         'available',
-        'motor',
-        'potencia',
-        'transmision',
-        'peso'
+        'precio_anterior',
+        'precio_actual',
     ];
 
     protected $casts = [
         'available' => 'boolean',
-        // 'peso' => 'decimal:2' // Comentado porque peso puede contener texto
+        'precio_anterior' => 'decimal:0',
+        'precio_actual' => 'decimal:0',
     ];
 
     public function category()

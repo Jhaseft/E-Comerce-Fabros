@@ -5,10 +5,8 @@ export default function ProductFormModal({ categoryId, product, onClose, onSave 
     name: product?.name || "",
     description: product?.description || "",
     longDescription: product?.longDescription || "",
-    motor: product?.motor || "",
-    potencia: product?.potencia || "",
-    transmision: product?.transmision || "",
-    peso: product?.peso || "",
+    precio_anterior: product?.precio_anterior || "",
+    precio_actual: product?.precio_actual || "",
     files: [], // archivos nuevos (tipo General)
   });
 
@@ -251,55 +249,36 @@ export default function ProductFormModal({ categoryId, product, onClose, onSave 
                 />
               </div>
 
-              {/* Especificaciones técnicas */}
+              {/* Precios */}
               <div className="border-t pt-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-3">Especificaciones Técnicas</h3>
+                <h3 className="text-lg font-semibold text-gray-800 mb-3">Precios</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-gray-700 font-medium mb-1">Motor</label>
+                    <label className="block text-gray-700 font-medium mb-1">Precio Anterior</label>
                     <input
-                      type="text"
-                      name="motor"
-                      value={formData.motor}
+                      type="number"
+                      name="precio_anterior"
+                      value={formData.precio_anterior}
                       onChange={handleChange}
+                      min="0"
+                      step="1"
                       className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                      placeholder="Ej: 2.0L Turbo"
+                      placeholder="Ej: 5990000"
                     />
+                    <p className="text-xs text-gray-400 mt-1">Dejar vacío si no aplica descuento</p>
                   </div>
 
                   <div>
-                    <label className="block text-gray-700 font-medium mb-1">Potencia</label>
+                    <label className="block text-gray-700 font-medium mb-1">Precio Actual</label>
                     <input
-                      type="text"
-                      name="potencia"
-                      value={formData.potencia}
+                      type="number"
+                      name="precio_actual"
+                      value={formData.precio_actual}
                       onChange={handleChange}
+                      min="0"
+                      step="1"
                       className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                      placeholder="Ej: 150 HP"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-gray-700 font-medium mb-1">Transmisión</label>
-                    <input
-                      type="text"
-                      name="transmision"
-                      value={formData.transmision}
-                      onChange={handleChange}
-                      className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                      placeholder="Ej: Manual 6 velocidades"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-gray-700 font-medium mb-1">Peso</label>
-                    <input
-                      type="text"
-                      name="peso"
-                      value={formData.peso}
-                      onChange={handleChange}
-                      className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                      placeholder="Ej: 1500 Kg o CAPACIDAD DE CARGA 1 TON"
+                      placeholder="Ej: 4990000"
                     />
                   </div>
                 </div>

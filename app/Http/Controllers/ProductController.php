@@ -87,13 +87,9 @@ class ProductController extends Controller
                     ])
                 ]),
 
-                // Especificaciones del producto (de la tabla products)
-                'specifications' => [
-                    'motor' => $product->motor ?? 'N/A',
-                    'potencia' => $product->potencia ?? 'N/A',
-                    'transmision' => $product->transmision ?? 'N/A',
-                    'peso' => $product->peso ?? 'N/A',
-                ],
+                // Precios del producto
+                'precio_anterior' => $product->precio_anterior,
+                'precio_actual' => $product->precio_actual,
 
                 // Características adicionales (de la tabla caracteristicas)
                 'caracteristicas' => $product->caracteristicas->map(fn($c) => [

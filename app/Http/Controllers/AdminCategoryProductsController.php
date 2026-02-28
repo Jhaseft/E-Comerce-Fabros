@@ -18,7 +18,7 @@ class AdminCategoryProductsController extends Controller
 
         $products = Product::where('category_id', $categoryId)
             ->with(['multimedia', 'variants.values.attribute'])
-            ->select('id', 'name', 'description','longDescription','motor','potencia','transmision','peso', 'available')
+            ->select('id', 'name', 'description','longDescription','precio_anterior','precio_actual', 'available')
             ->paginate(6)
             ->onEachSide(1);
 
@@ -36,10 +36,8 @@ class AdminCategoryProductsController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'longDescription' => 'nullable|string',
-            'motor' => 'nullable|string|max:100',
-            'potencia' => 'nullable|string|max:50',
-            'transmision' => 'nullable|string|max:50',
-            'peso' => 'nullable|string|max:256',
+            'precio_anterior' => 'nullable|numeric|min:0',
+            'precio_actual' => 'nullable|numeric|min:0',
             'files' => 'nullable|array|max:10',
             'files.*' => 'file|max:51200|mimes:jpeg,jpg,png,gif,webp,mp4,mov,avi',
         ]);
@@ -49,10 +47,8 @@ class AdminCategoryProductsController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'longDescription' => $request->longDescription,
-            'motor' => $request->motor,
-            'potencia' => $request->potencia,
-            'transmision' => $request->transmision,
-            'peso' => $request->peso,
+            'precio_anterior' => $request->precio_anterior ?: null,
+            'precio_actual' => $request->precio_actual ?: null,
             'available' => 1,
         ]);
 
@@ -71,10 +67,8 @@ class AdminCategoryProductsController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'longDescription' => 'nullable|string',
-            'motor' => 'nullable|string|max:100',
-            'potencia' => 'nullable|string|max:50',
-            'transmision' => 'nullable|string|max:50',
-            'peso' => 'nullable|string|max:256',
+            'precio_anterior' => 'nullable|numeric|min:0',
+            'precio_actual' => 'nullable|numeric|min:0',
             'files' => 'nullable|array|max:10',
             'files.*' => 'file|max:51200|mimes:jpeg,jpg,png,gif,webp,mp4,mov,avi',
             'removed_media_ids' => 'nullable|array',
@@ -82,7 +76,13 @@ class AdminCategoryProductsController extends Controller
         ]);
 
         // Actualizar datos del producto
-        $product->update($request->only('name', 'description', 'longDescription', 'motor', 'potencia', 'transmision', 'peso'));
+        $product->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'longDescription' => $request->longDescription,
+            'precio_anterior' => $request->precio_anterior ?: null,
+            'precio_actual' => $request->precio_actual ?: null,
+        ]);
 
         // Eliminar multimedia removida
         if ($request->filled('removed_media_ids')) {

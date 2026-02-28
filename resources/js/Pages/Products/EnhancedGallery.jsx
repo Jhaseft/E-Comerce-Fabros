@@ -28,20 +28,20 @@ export default function EnhancedGallery({ multimedia, productName }) {
   return (
     <div className="space-y-6">
       {/* Main Display */}
-      <div className="relative w-full aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden shadow-2xl border-2 border-gray-200 group">
+      <div className="relative w-full aspect-square bg-white rounded-2xl overflow-hidden shadow-lg group" style={{ border: '1px solid #e5e7eb', borderTop: '3px solid #02478f' }}>
         {isVideo ? (
           <video
             key={currentMedia.url}
             src={currentMedia.url}
             controls
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
         ) : (
           <>
             <img
               src={currentMedia.url}
               alt={`${productName} - ${selectedIndex + 1}`}
-              className="w-full h-full object-cover cursor-zoom-in hover:scale-105 transition-transform duration-700"
+              className="w-full h-full object-contain p-4 cursor-zoom-in hover:scale-105 transition-transform duration-700"
               onClick={() => setIsZoomOpen(true)}
             />
             {/* Zoom hint */}
@@ -64,10 +64,10 @@ export default function EnhancedGallery({ multimedia, productName }) {
               <button
                 key={index}
                 onClick={() => setSelectedIndex(index)}
-                className={`relative aspect-square rounded-xl overflow-hidden border-3 transition-all duration-300 transform hover:scale-105 ${
+                className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all duration-300 transform hover:scale-105 ${
                   selectedIndex === index
-                    ? "border-turquoise shadow-xl ring-2 ring-turquoise/50 scale-105"
-                    : "border-gray-300 hover:border-darkTurquoise shadow-md"
+                    ? "border-brandBlue shadow-xl scale-105"
+                    : "border-gray-200 hover:border-brandBlue shadow-md"
                 }`}
               >
                 {isVideoThumb ? (
@@ -90,12 +90,12 @@ export default function EnhancedGallery({ multimedia, productName }) {
                   <img
                     src={media.url}
                     alt={`Thumbnail ${index + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    className="w-full h-full object-contain p-1 transition-transform duration-300 group-hover:scale-110 bg-white"
                   />
                 )}
                 {/* Selection indicator */}
                 {selectedIndex === index && (
-                  <div className="absolute inset-0 bg-turquoise/20 border-2 border-turquoise"></div>
+                  <div className="absolute inset-0 border-2 border-brandBlue" style={{ backgroundColor: 'rgba(2,71,143,0.08)' }}></div>
                 )}
               </button>
             );

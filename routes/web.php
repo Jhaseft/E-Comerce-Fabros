@@ -164,5 +164,10 @@ Route::prefix('admin')->group(function () {
 Route::get('/auth/google/redirect', [SocialController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/auth/google/callback', [SocialController::class, 'handleGoogleCallback'])->name('google.callback');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/profile/complete', [SocialController::class, 'showCompleteProfile'])->name('profile.complete');
+    Route::post('/profile/complete', [SocialController::class, 'storeCompleteProfile'])->name('profile.complete.store');
+});
+
 
 require __DIR__.'/auth.php';
