@@ -108,7 +108,7 @@ export default function Header() {
           <Link href="/" className="flex items-center">
             <img
               src="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg"
-              alt="Pragati | Nibol Logo"
+              alt="FABROS | Nibol Logo"
               className={`transition-all duration-300 object-contain ${
                 isScrolled ? 'h-12 w-32 md:h-14 md:w-40' : 'h-16 w-40 md:h-20 md:w-56'
               }`}

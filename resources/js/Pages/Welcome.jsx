@@ -6,7 +6,7 @@ import CTAContact from '@/Components/welcome/WelcomeSe/CTAContact';
 export default function Welcome({ categories, search, page, hasMore }) {
   
   return (
-    <Layout title="Pragati Motors | Bolivia">
+    <Layout title="FABROS | Bolivia">
       
       <Banner img="https://res.cloudinary.com/dnbklbswg/image/upload/v1772251280/fabros1_yztzgo.jpg" />
       

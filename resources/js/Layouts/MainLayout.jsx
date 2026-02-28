@@ -8,7 +8,7 @@ export default function Layout({ title, auth, children,categories ,hasMore }) {
 
   return (
     <CartProvider>
-      <Head title={title || "PRAGATI MOTORS"} />
+      <Head title={title || "FABROS"} />
 
       <div className="min-h-screen flex flex-col bg-white text-darkGray relative">
         <Header auth={auth} />
