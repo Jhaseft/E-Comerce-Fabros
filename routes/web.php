@@ -47,14 +47,6 @@ Route::prefix('carrito')->group(function () {
 });
 
 
-    Route::get('/checkout', function () {
-        return Inertia::render('checkout');
-    })->name('checkout');
-
-    // Endpoint para crear pedido
-    Route::post('/orders/store', [PedidosController::class, 'store'])->name('orders.store');
-
-
 
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
@@ -167,6 +159,13 @@ Route::get('/auth/google/callback', [SocialController::class, 'handleGoogleCallb
 Route::middleware('auth')->group(function () {
     Route::get('/profile/complete', [SocialController::class, 'showCompleteProfile'])->name('profile.complete');
     Route::post('/profile/complete', [SocialController::class, 'storeCompleteProfile'])->name('profile.complete.store');
+    
+    Route::get('/checkout', function () {
+        return Inertia::render('checkout');
+    })->name('checkout');
+
+    // Endpoint para crear pedido
+    Route::post('/orders/store', [PedidosController::class, 'store'])->name('orders.store');
 });
 
 
