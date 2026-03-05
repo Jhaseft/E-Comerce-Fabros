@@ -51,7 +51,7 @@ function UserDropdown({ user }) {
 
       {open && (
         <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-1 z-50 animate-fade-in">
-     
+
           <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-3">
             <UserAvatar name={user.name} />
             <div className="min-w-0">
@@ -99,9 +99,8 @@ export default function Header() {
     <>
       <ParteArriba />
       <header
-        className={`w-full animate-blurred-fade-in bg-brandBlue shadow-md transition-all duration-300 sticky top-0 z-50 ${
-          isScrolled ? 'py-2' : 'py-4'
-        }`}
+        className={`w-full animate-blurred-fade-in bg-brandBlue shadow-md transition-all duration-300 sticky top-0 z-50 ${isScrolled ? 'py-2' : 'py-4'
+          }`}
       >
         <div className="container mx-auto flex justify-between items-center px-6">
 
@@ -109,13 +108,21 @@ export default function Header() {
             <img
               src="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg"
               alt="FABROS | Nibol Logo"
-              className={`transition-all duration-300 object-contain ${
-                isScrolled ? 'h-12 w-32 md:h-14 md:w-40' : 'h-16 w-40 md:h-20 md:w-56'
-              }`}
+              className={`transition-all duration-300 object-contain ${isScrolled ? 'h-12 w-32 md:h-14 md:w-40' : 'h-16 w-40 md:h-20 md:w-56'
+                }`}
             />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-8 font-semibold text-white">
+            <a
+              href="https://www.busesycamiones.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-brandLight transition-colors duration-300"
+            >
+              BUSES Y CAMIONES
+            </a>
+
             {navCategories.map((cat) => (
               <NavLink key={cat.id} href={`/products/${cat.slug}`}>
                 {cat.name}
@@ -151,11 +158,10 @@ export default function Header() {
           </button>
         </div>
 
-     
+
         <div
-          className={`lg:hidden overflow-hidden transition-all duration-300 ${
-            mobileMenuOpen ? 'max-h-screen border-t border-brandLight/30' : 'max-h-0'
-          }`}
+          className={`lg:hidden overflow-hidden transition-all duration-300 ${mobileMenuOpen ? 'max-h-screen border-t border-brandLight/30' : 'max-h-0'
+            }`}
         >
           <nav className="container mx-auto px-6 py-4 flex flex-col gap-3">
             {navCategories.map((cat) => (

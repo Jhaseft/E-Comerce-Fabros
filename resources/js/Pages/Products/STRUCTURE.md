@@ -64,7 +64,7 @@ VehicleShowcase.jsx (Componente Principal)
 | **Specs** | ❌ No incluidas | ✅ FeatureHighlights (4 iconos) |
 | **Colores** | ❌ No incluido | ✅ ColorSelector interactivo |
 | **Características** | ❌ No incluido | ✅ SpecificationsSection (5 tabs) |
-| **CTA** | Añadir al carrito + WhatsApp | Cotizar + Añadir al carrito |
+| **CTA** | Añadir al carrito + WhatsApp | Comprar + Añadir al carrito |
 | **Ficha Técnica** | ❌ No incluida | ✅ Botón de descarga PDF |
 | **Layout** | Single section | Multi-section con backgrounds |
 
