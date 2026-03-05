@@ -45,10 +45,10 @@ export default function Footer() {
       <div className="border-t border-brandLight/20">
         <div className="container mx-auto px-6 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            
-            
+
+
             <div className="space-y-6">
-             
+
               <div className="flex items-center gap-4">
                 <img
                   src="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg"
@@ -59,7 +59,7 @@ export default function Footer() {
                     e.target.nextElementSibling.style.display = 'block';
                   }}
                 />
-               
+
                 <div className="hidden">
                   <h3 className="text-2xl font-black tracking-tight">FABROS</h3>
                   <p className="text-sm text-brandLight">Bolivia</p>
@@ -75,33 +75,49 @@ export default function Footer() {
                 acompañarte en la adquisición de tu vehículo ideal en todo Bolivia.
               </p>
 
-              
-              <button className="group relative px-8 py-4 bg-white text-black font-bold text-lg rounded-full overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+
+              <a
+                href="https://wa.me/59174161243"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative px-8 py-4 bg-white text-black font-bold text-lg rounded-full overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 inline-block"
+              >
                 <span className="relative z-10 flex items-center gap-2">
                   Contáctanos
-                  <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  <svg
+                    className="w-5 h-5 transition-transform group-hover:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
                   </svg>
                 </span>
+
                 <div className="absolute inset-0 bg-gray-900 opacity-0 group-hover:opacity-10 transition-opacity"></div>
-              </button>
+              </a>
             </div>
 
-          
-           
+
+
           </div>
         </div>
       </div>
 
-      
+
       <div className="h-px bg-gradient-to-r from-transparent via-brandLight/40 to-transparent"></div>
 
-      
+
       <div className="bg-brandBlue border-t border-brandLight/20">
         <div className="container mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            
-            
+
+
             <div className="text-brandLight text-sm text-center md:text-left">
               <p>Copyright © <span className="font-bold text-white">Fabros Bolivia</span> {new Date().getFullYear()} – Todos los derechos reservados</p>
               <p className="mt-1 text-xs">
@@ -111,7 +127,7 @@ export default function Footer() {
               </p>
             </div>
 
-          
+
             <div className="flex items-center gap-6">
               <span className="text-brandLight text-sm font-medium hidden sm:inline">Síguenos:</span>
               <div className="flex gap-3">
@@ -127,12 +143,12 @@ export default function Footer() {
                     <div className="text-white group-hover:text-brandBlue transition-colors duration-300">
                       {social.icon}
                     </div>
-                    
-                    {/* Tooltip */}
+
+
                     <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-black text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none font-medium shadow-lg">
                       {social.name}
                       <svg className="absolute top-full left-1/2 -translate-x-1/2 -mt-px" width="8" height="4" viewBox="0 0 8 4" fill="white">
-                        <path d="M0 0L4 4L8 0H0Z"/>
+                        <path d="M0 0L4 4L8 0H0Z" />
                       </svg>
                     </span>
                   </a>

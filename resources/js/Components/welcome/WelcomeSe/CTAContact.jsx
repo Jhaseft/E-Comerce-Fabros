@@ -41,7 +41,7 @@ export default function CTAContact() {
           </p>
 
 
-          <a href="https://wa.me/59177887103" target="_blank" rel="noopener noreferrer" className="pt-8">
+          <a href="https://wa.me/59174161243" target="_blank" rel="noopener noreferrer" className="pt-8">
             <button className="group relative px-12 py-6 bg-brandBlue text-white font-black text-xl rounded-full overflow-hidden shadow-2xl hover:shadow-brandBlue/40 transition-all duration-500 transform hover:scale-105">
               <span className="relative z-10 flex items-center gap-4">
                 <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
@@ -65,7 +65,7 @@ export default function CTAContact() {
               </div>
               <div className="text-left">
                 <div className="text-sm text-gray-500 font-medium">Llámanos</div>
-                <div className="text-lg font-bold text-brandBlue">+591 77887103</div>
+                <div className="text-lg font-bold text-brandBlue">+591 74161243</div>
               </div>
             </div>
 

@@ -77,7 +77,7 @@ function UserDropdown({ user }) {
     </div>
   );
 }
- 
+
 export default function Header() {
   const { navCategories = [], auth } = usePage().props;
   const user = auth?.user;
@@ -175,16 +175,42 @@ export default function Header() {
             }`}
         >
           <nav className="container mx-auto px-6 py-4 flex flex-col gap-3">
-            {navCategories.map((cat) => (
-              <Link
-                key={cat.id}
-                href={`/products/${cat.slug}`}
-                className="text-white hover:text-brandLight font-semibold transition-colors py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {cat.name}
-              </Link>
-            ))}
+
+            {navCategories
+              .filter((cat) => cat.slug === "vehiculos")
+              .map((cat) => (
+                <Link
+                  key={cat.id}
+                  href={`/products/${cat.slug}`}
+                  className="text-white hover:text-brandLight font-semibold transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {cat.name}
+                </Link>
+              ))}
+
+            <a
+              href="https://www.busesycamiones.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-brandLight font-semibold transition-colors py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              BUSES Y CAMIONES
+            </a>
+
+            {navCategories
+              .filter((cat) => cat.slug !== "vehiculos")
+              .map((cat) => (
+                <Link
+                  key={cat.id}
+                  href={`/products/${cat.slug}`}
+                  className="text-white hover:text-brandLight font-semibold transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {cat.name}
+                </Link>
+              ))}
 
             {user ? (
               <div className="border-t border-white/20 pt-3 mt-1">
@@ -195,14 +221,11 @@ export default function Header() {
                     <p className="text-xs text-white/60 truncate">{user.email}</p>
                   </div>
                 </div>
+
                 <button
                   onClick={handleLogout}
                   className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2 rounded-lg text-sm font-semibold transition-colors duration-200"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                  </svg>
                   Cerrar sesión
                 </button>
               </div>

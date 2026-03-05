@@ -13,7 +13,7 @@ export default function Contacto() {
 
               
                 <div className="text-darkGray text-lg mb-6 space-y-2">
-                    <p> WhatsApp: <span className="text-turquoise font-semibold">+56 978843627</span></p>
+                    <p> WhatsApp: <span className="text-turquoise font-semibold">+591 74161243</span></p>
                 </div>
 
                 
@@ -27,7 +27,7 @@ export default function Contacto() {
                         <FaInstagram size={50} />
                     </a>
                     <a 
-                        href="https://wa.me/56978843627" 
+                        href="https://wa.me/59174161243" 
                         target="_blank" 
                         rel="noopener noreferrer" 
                         className="text-turquoise hover:text-darkTurquoise transition-colors"
