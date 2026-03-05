@@ -77,7 +77,7 @@ function UserDropdown({ user }) {
     </div>
   );
 }
-
+ 
 export default function Header() {
   const { navCategories = [], auth } = usePage().props;
   const user = auth?.user;
@@ -114,6 +114,15 @@ export default function Header() {
           </Link>
 
           <nav className="hidden lg:flex items-center gap-8 font-semibold text-white">
+
+            {navCategories
+              .filter((cat) => cat.slug === "vehiculos")
+              .map((cat) => (
+                <NavLink key={cat.id} href={`/products/${cat.slug}`}>
+                  {cat.name}
+                </NavLink>
+              ))}
+
             <a
               href="https://www.busesycamiones.com"
               target="_blank"
@@ -123,11 +132,13 @@ export default function Header() {
               BUSES Y CAMIONES
             </a>
 
-            {navCategories.map((cat) => (
-              <NavLink key={cat.id} href={`/products/${cat.slug}`}>
-                {cat.name}
-              </NavLink>
-            ))}
+            {navCategories
+              .filter((cat) => cat.slug !== "vehiculos")
+              .map((cat) => (
+                <NavLink key={cat.id} href={`/products/${cat.slug}`}>
+                  {cat.name}
+                </NavLink>
+              ))}
 
             {user ? (
               <UserDropdown user={user} />
