@@ -5,7 +5,7 @@ import FeatureHighlights from "./FeatureHighlights";
 import TechnicalSpecificationsTable from "./TechnicalSpecificationsTable";
 import BuyNowModal from "@/Components/Products/BuyNowModal";
 import { ShoppingCart } from 'lucide-react';
-
+import { usePage, router } from '@inertiajs/react';
 export default function VehicleShowcase({ product }) {
 
 
@@ -18,7 +18,7 @@ export default function VehicleShowcase({ product }) {
 
 
   const currentUrl = window.location.href;
-
+  const user = usePage().props.auth.user;
 
   // Características adicionales de la tabla 'caracteristicas'
   const caracteristicas = product.caracteristicas || [];
@@ -72,11 +72,19 @@ export default function VehicleShowcase({ product }) {
               />
 
               <button
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  if (!user) {
+                    alert("Debes iniciar sesión para realizar la compra.");
+                    router.visit("/login");
+                    return;
+                  }
+
+                  setOpenModal(true);
+                }}
                 className="flex items-center justify-center gap-3 w-full py-4 px-6 rounded-xl font-bold text-base sm:text-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ backgroundColor: '#02478f', color: 'white' }}
               >
-                 <ShoppingCart /> Comprar ahora
+                <ShoppingCart /> Comprar ahora
               </button>
 
 
@@ -105,6 +113,6 @@ export default function VehicleShowcase({ product }) {
       />
 
     </>
-    
+
   );
 }

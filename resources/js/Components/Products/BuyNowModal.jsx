@@ -1,6 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
-
 export default function BuyNowModal({
     isOpen,
     onClose,
@@ -20,45 +18,46 @@ export default function BuyNowModal({
     const total = Number(product.precio_actual) * quantity;
 
     const handleSubmitToBackend = async () => {
-    try {
-        setLoading(true);
+        try {
+        
+            setLoading(true);
 
-        const formData = new FormData();
-        formData.append("product_id", product.id);
-        formData.append("quantity", quantity);
-        formData.append("payment_proof", paymentFile);
+            const formData = new FormData();
+            formData.append("product_id", product.id);
+            formData.append("quantity", quantity);
+            formData.append("payment_proof", paymentFile);
 
-        const token = document
-            .querySelector('meta[name="csrf-token"]')
-            .getAttribute("content");
+            const token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
 
-        const response = await fetch("/orders/store", {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": token,
-            },
-            body: formData,
-        });
+            const response = await fetch("/orders/store", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": token,
+                },
+                body: formData,
+            });
 
-        const data = await response.json();
+            const data = await response.json();
 
-        if (data.success) {
-            alert(" Su pedido se realizó correctamente (Nos comunicaremos con el numero o correo registrado).");
+            if (data.success) {
+                alert(" Su pedido se realizó correctamente (Nos comunicaremos con el numero o correo registrado).");
 
-            onClose();
-            setQuantity(1);
-            setPaymentFile(null);
-        } else {
-            alert(" Ocurrió un error al procesar el pedido.");
+                onClose();
+                setQuantity(1);
+                setPaymentFile(null);
+            } else {
+                alert(" Ocurrió un error al procesar el pedido.");
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert(" Error inesperado al enviar el pedido.");
+        } finally {
+            setLoading(false);
         }
-
-    } catch (error) {
-        console.error(error);
-        alert(" Error inesperado al enviar el pedido.");
-    } finally {
-        setLoading(false);
-    }
-};
+    };
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
