@@ -3,11 +3,10 @@ import Header from '@/Components/welcome/Header';
 import Footer from '@/Components/welcome/Footer';
 import { CartProvider } from '@/Contexts/CartContext';
 import { useState } from 'react';
-import CartIcon from '@/Components/welcome/Cart/CartIcon';
-import CartModal from '@/Components/welcome/Cart/CartModal';
+
 
 export default function Layout({ title, auth, children }) {
-  const [isCartOpen, setCartOpen] = useState(false);
+
 
   return (
     <CartProvider>
@@ -21,17 +20,6 @@ export default function Layout({ title, auth, children }) {
         </main>
 
         <Footer />
-
-        
-        <div className="fixed bottom-24 right-6 z-[9000]">
-          <CartIcon onClick={() => setCartOpen(true)} />
-        </div>
-
-       
-        <CartModal
-          isOpen={isCartOpen}
-          onClose={() => setCartOpen(false)}
-        />
 
         <a
           href="https://wa.me/56978843627"

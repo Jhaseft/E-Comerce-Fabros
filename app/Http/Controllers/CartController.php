@@ -18,7 +18,6 @@ class CartController extends Controller
     'price' => (float) $request->precio,
     'weight' => 0,
     'options' => [
-        'uuid' => uniqid(),
         'image' => $request->image ?? null,
         'sku' => $request->sku ?? null,
         'variant' => $request->variant ?? null,

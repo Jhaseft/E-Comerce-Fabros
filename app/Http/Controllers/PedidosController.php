@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Order;
 use App\Models\OrderItem;
-use Cart;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use App\Mail\OrderConfirmation;
+use Cart;
 
 class PedidosController extends Controller
 {
@@ -21,78 +22,93 @@ class PedidosController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'customer_name' => 'required|string|max:255',
-            'customer_phone' => 'required|string|max:20',
+            'customer_name'  => 'required|string|max:255',
+            'customer_phone' => 'required|string|max:50',
             'customer_email' => 'required|email|max:255',
-            'payment_method' => 'required|integer',
-            'cart' => 'required|array|min:1',
-            'cart.*.id' => 'required|exists:products,id',
-            'cart.*.quantity' => 'required|integer|min:1',
-            'cart.*.price' => 'required|numeric|min:0',
-            'cart.*.sku' => 'required|string|max:100',
-            'cart.*.subtotal' => 'required|numeric|min:0',
-            'cart.*.name' => 'nullable|string|max:255',
-            'cart.*.size' => 'nullable|string|max:255',
-            'status' => 'required|integer',
-            'total' => 'required|numeric|min:0',
+            'total'          => 'required|numeric|min:0',
+            'cart'           => 'required|string',
+            'payment_proof'  => 'required|image|max:4096',
         ]);
 
+        $cartItems = json_decode($request->cart, true);
+
+        if (empty($cartItems)) {
+            return response()->json(['success' => false, 'message' => 'El carrito está vacío'], 422);
+        }
+
+        DB::beginTransaction();
+
         try {
-          
+            // Subir comprobante a Cloudinary
+            $paymentUrl = null;
+
+            if ($request->hasFile('payment_proof')) {
+                $uploadApi = new \Cloudinary\Api\Upload\UploadApi();
+                $upload = $uploadApi->upload(
+                    $request->file('payment_proof')->getRealPath(),
+                    ['folder' => 'orders/payment_proofs', 'resource_type' => 'image']
+                );
+                $paymentUrl = $upload['secure_url'];
+            }
+
+            // Crear orden
             $order = Order::create([
-                'customer_name' => $request->customer_name,
-                'customer_phone' => $request->customer_phone,
-                'customer_email' => $request->customer_email,
-                'status_id' => $request->status,
-                'payment_method_id' => $request->payment_method,
-                'total' => $request->total,
+                'customer_name'     => $request->customer_name,
+                'customer_phone'    => $request->customer_phone,
+                'customer_email'    => $request->customer_email,
+                'status_id'         => 1,
+                'payment_method_id' => 1,
+                'total'             => round($request->total, 2),
+                'payment_proof'     => $paymentUrl,
             ]);
 
-            
-            $orderItems = [];
-            foreach ($request->cart as $item) {
-                $orderItems[] = OrderItem::create([
-                    'order_id' => $order->id,
+            // Crear un OrderItem por cada producto del carrito
+            foreach ($cartItems as $item) {
+                OrderItem::create([
+                    'order_id'   => $order->id,
                     'product_id' => $item['id'],
-                    'sku' => $item['sku'],
-                    'name' => $item['name'] ?? null,
-                    'quantity' => $item['quantity'],
-                    'price' => round($item['price'], 2),
-                    'subtotal' => round($item['subtotal'], 2),
+                    'quantity'   => $item['quantity'],
+                    'price'      => round($item['price'], 2),
+                    'subtotal'   => round($item['subtotal'], 2),
                 ]);
             }
 
-         
-                    $itemsForMail = [];
-            foreach ($request->cart as $item) {
-                $itemsForMail[] = [
-                    'name' => $item['name'] ?? 'Producto',
-                    'size' => $item['size'] ?? null, //  TALLA (NO BD)
-                    'quantity' => $item['quantity'],
-                    'price' => round($item['price'], 2),
-                    'subtotal' => round($item['subtotal'], 2),
-                ];
-            }
+            // // Preparar datos para el correo
+            // $itemsForMail = [
+            //     [
+            //         'name' => $product->nombre ?? 'Producto',
+            //         'quantity' => $request->quantity,
+            //         'price' => round($price, 2),
+            //         'subtotal' => round($subtotal, 2),
+            //     ]
+            // ];
 
-        try {
-            Mail::to($order->customer_email)
-            ->send(new \App\Mail\OrderConfirmation($order, $itemsForMail));
-        } catch (\Exception $e) {
-            Log::error("Error enviando correo al cliente: " . $e->getMessage());
-        } 
+            // //  Enviar correo al cliente + copia admin
+            // try {
 
+            //     Mail::to($order->customer_email)
+            //         ->send(new OrderConfirmation($order, $itemsForMail));
+
+            // } catch (\Exception $mailError) {
+            //     Log::error("Error enviando correo pedido directo: " . $mailError->getMessage());
+            // }
             Cart::destroy();
+            DB::commit();
 
-                    return response()->json([
-                        'success' => true,
-                        'order_id' => $order->id,
-                    ]);
+            return response()->json([
+                'success' => true,
+                'order_id' => $order->id,
+            ]);
 
         } catch (\Exception $e) {
-            Log::error("Error creando pedido: ".$e->getMessage());
+
+            DB::rollBack();
+
+            Log::error("Error creando pedido directo: " . $e->getMessage());
+
             return response()->json([
                 'success' => false,
-                'message' => 'Error al crear el pedido: '.$e->getMessage()
+                'message' => 'Error al crear el pedido'
             ], 500);
         }
     }

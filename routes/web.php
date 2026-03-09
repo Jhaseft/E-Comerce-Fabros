@@ -24,10 +24,15 @@ Route::get('/Contacto', function () {
         return Inertia::render('Contacto');
     })->name('contacto');
 
-//para clientes 
+//para clientes
 Route::get('/products/{slug}/{product}', [ProductController::class, 'show'])
+    ->where('slug', '.*')  // Acepta cualquier carácter en el slug, incluyendo caracteres especiales
     ->name('products.show');
-   
+
+//para cliente
+Route::get('/products/{slug}', [ProductController::class, 'getCategoryDetails'])->name('products.categoria');
+
+
 Route::get('/ventas/json', [ProductController::class, 'getCategoriasJson'])->name('admin.ventas.json');    
 
 Route::prefix('carrito')->group(function () {
@@ -37,14 +42,6 @@ Route::prefix('carrito')->group(function () {
     Route::delete('/remove/{rowId}', [CartController::class, 'remove'])->name('carrito.remove');
     Route::delete('/clear', [CartController::class, 'clear'])->name('carrito.clear');
 });
-
-
-    Route::get('/checkout', function () {
-        return Inertia::render('checkout');
-    })->name('checkout');
-
-    // Endpoint para crear pedido
-    Route::post('/orders/store', [PedidosController::class, 'store'])->name('orders.store');
 
 
 
@@ -152,5 +149,16 @@ Route::prefix('admin')->group(function () {
 Route::get('/auth/google/redirect', [SocialController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/auth/google/callback', [SocialController::class, 'handleGoogleCallback'])->name('google.callback');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/profile/complete', [SocialController::class, 'showCompleteProfile'])->name('profile.complete');
+    Route::post('/profile/complete', [SocialController::class, 'storeCompleteProfile'])->name('profile.complete.store');
+    
+    Route::get('/checkout', function () {
+        return Inertia::render('checkout');
+    })->name('checkout');
+
+    // Endpoint para crear pedido
+    Route::post('/orders/store', [PedidosController::class, 'store'])->name('orders.store');
+});
 
 require __DIR__.'/auth.php';

@@ -21,6 +21,7 @@ class Order extends Model
     'status_id',
     'payment_method_id',
     'total',
+    'payment_proof',
 ];
     protected $casts = [
         'total' => 'decimal:2',

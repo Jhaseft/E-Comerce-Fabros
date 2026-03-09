@@ -2,6 +2,9 @@ import { Link, usePage, router } from '@inertiajs/react';
 import { useState, useEffect, useRef } from 'react';
 import ParteArriba from './Header/partearriba';
 import NavLink from './Header/Navlink';
+import { ShoppingCart } from 'lucide-react';
+import { useCart } from '@/Contexts/CartContext';
+import CartModal from '@/Components/welcome/Cart/CartModal';
 
 function UserAvatar({ name, size = 'md' }) {
   const initials = name
@@ -81,9 +84,11 @@ function UserDropdown({ user }) {
 export default function Header() {
   const { navCategories = [], auth } = usePage().props;
   const user = auth?.user;
+  const { cartCount } = useCart();
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isCartOpen, setCartOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -138,7 +143,7 @@ export default function Header() {
                 <NavLink key={cat.id} href={`/products/${cat.slug}`}>
                   {cat.name}
                 </NavLink>
-              ))}
+              ))} 
 
             {user ? (
               <UserDropdown user={user} />
@@ -150,23 +155,52 @@ export default function Header() {
                 Iniciar sesión
               </Link>
             )}
+
+              <button
+              onClick={() => setCartOpen(true)}
+              className="relative text-white hover:text-brandLight transition-colors duration-300"
+              aria-label="Carrito"
+            >
+              <ShoppingCart size={24} />
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-turquoise text-darkGray text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
           </nav>
 
-          <button
-            className="lg:hidden text-white hover:text-brandLight transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
+          <div className="lg:hidden flex items-center gap-3">
+            
+            <button
+              className="text-white hover:text-brandLight transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+
+            <button
+              onClick={() => setCartOpen(true)}
+              className="relative text-white hover:text-brandLight transition-colors"
+              aria-label="Carrito"
+            >
+              <ShoppingCart size={22} />
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-turquoise text-darkGray text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
 
 
@@ -240,6 +274,8 @@ export default function Header() {
           </nav>
         </div>
       </header>
+
+      <CartModal isOpen={isCartOpen} onClose={() => setCartOpen(false)} />
     </>
   );
 }

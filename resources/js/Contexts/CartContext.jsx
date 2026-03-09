@@ -29,7 +29,7 @@ export const CartProvider = ({ children }) => {
       const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
   
       const existing = cart.find(item =>
-        item.id === product.id && item.options?.variant === product.variant
+        String(item.id) === String(product.id) && item.options?.variant === (product.variant ?? null)
       );
 
       if (existing) {
