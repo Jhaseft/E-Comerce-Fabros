@@ -143,7 +143,7 @@ export default function CheckoutPageContent() {
                         type="file"
                         accept="image/*"
                         onChange={e => setPaymentFile(e.target.files[0])}
-                        className="w-full mb-2 text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:text-white cursor-pointer"
+                        className="w-full mb-2 text-sm  text-black file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:text-black cursor-pointer"
                     />
                     {paymentFile && (
                         <p className="text-green-600 text-sm mt-1">
