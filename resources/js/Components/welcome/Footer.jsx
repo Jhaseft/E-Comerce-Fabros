@@ -1,40 +1,161 @@
-import { FaInstagram } from "react-icons/fa";
-
 export default function Footer() {
+  const socialLinks = [
+    {
+      name: 'Tiktok',
+      href: 'https://www.tiktok.com/@fabros.bolivia',
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12.75 2h2.5c.2 1.7 1.4 3.2 3.1 3.8.7.3 1.4.4 2.2.4v2.6c-.9 0-1.8-.2-2.7-.5-.7-.3-1.4-.7-2-1.2v7.1c0 3.6-2.9 6.5-6.5 6.5S3 17.8 3 14.2s2.9-6.5 6.5-6.5c.3 0 .7 0 1 .1v2.7c-.3-.1-.7-.2-1-.2-2 0-3.7 1.6-3.7 3.7S7.5 17.7 9.5 17.7s3.7-1.6 3.7-3.7V2z" />
+        </svg>
+      ),
+    },
+    {
+      name: 'Facebook',
+      href: 'https://www.facebook.com/FabrosBolivia',
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+        </svg>
+      ),
+    },
+    {
+      name: 'Instagram',
+      href: 'https://www.instagram.com/fabrosbolivia',
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+        </svg>
+      ),
+    },
+    {
+      name: 'YouTube',
+      href: 'https://www.youtube.com/@fabrosbolivia1823',
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+        </svg>
+      ),
+    },
+  ];
+
+
   return (
-    <footer
-      className="bg-darkGray text-center py-12 mt-10 border-t border-darkTurquoise shadow-inner"
-      
-    >
-    
-      <p className="text-grayCustom font-medium tracking-wide mb-6">
-        © {new Date().getFullYear()} Maro Uniformes — Todos los derechos reservados.
-      </p>
+    <footer className="bg-brandBlue text-white mt-1">
 
-      
-      <div className="flex justify-center mb-6">
-        <a
-          href="https://www.instagram.com/maro_uniformes_?igsh=MTZwcm02bzdmMnl5ZA=="
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-turquoise hover:text-darkTurquoise transition-colors"
-        >
-          <FaInstagram size={36} />
-        </a>
-      </div> 
- 
-      <div className="text-grayCustom text-sm space-y-3">
-        <p className="text-lg text-turquoise font-semibold">
-           56 978843627
-        </p>
+      <div className="border-t border-brandLight/20">
+        <div className="container mx-auto px-6 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
-        <p className="text-xs tracking-wide">
-          Política de privacidad | Términos de uso
-        </p>
 
-        <div className="mt-4 text-grayCustom font-medium">
-          <p className="text-turquoise font-semibold mb-1">CHILE 🇨🇱</p>
-          <p>Atención personalizada vía WhatsApp e Instagram</p>
+            <div className="space-y-6">
+
+              <div className="flex items-center gap-4">
+                <img
+                  src="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg"
+                  alt="Pragbati | Nibol Logo"
+                  className="h-16 w-auto "
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextElementSibling.style.display = 'block';
+                  }}
+                />
+
+                <div className="hidden">
+                  <h3 className="text-2xl font-black tracking-tight">FABROS</h3>
+                  <p className="text-sm text-brandLight">Bolivia</p>
+                </div>
+              </div>
+
+              <p className="text-brandLight text-lg leading-relaxed max-w-xl">
+                <span className="font-bold text-white">FABROS</span> es representante oficial en Bolivia de{' '}
+                <span className="font-bold text-white">DongFeng Motors</span> y sus marcas{' '}
+                <span className="font-bold text-white">ZNA</span> y{' '}
+                <span className="font-bold text-white">Yutong Buses</span>.{' '}
+                Con más de 15 años de experiencia, nuestro equipo de asesores está listo para
+                acompañarte en la adquisición de tu vehículo ideal en todo Bolivia.
+              </p>
+
+
+              <a
+                href="https://wa.me/59174161243"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative px-8 py-4 bg-white text-black font-bold text-lg rounded-full overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 inline-block"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  Contáctanos
+                  <svg
+                    className="w-5 h-5 transition-transform group-hover:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
+                  </svg>
+                </span>
+
+                <div className="absolute inset-0 bg-gray-900 opacity-0 group-hover:opacity-10 transition-opacity"></div>
+              </a>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+
+
+      <div className="h-px bg-gradient-to-r from-transparent via-brandLight/40 to-transparent"></div>
+
+
+      <div className="bg-brandBlue border-t border-brandLight/20">
+        <div className="container mx-auto px-6 py-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+
+
+            <div className="text-brandLight text-sm text-center md:text-left">
+              <p>Copyright © <span className="font-bold text-white">Fabros Bolivia</span> {new Date().getFullYear()} – Todos los derechos reservados</p>
+              <p className="mt-1 text-xs">
+                <a href="#" className="hover:text-white transition-colors">Política de privacidad</a>
+                {' • '}
+                <a href="#" className="hover:text-white transition-colors">Términos de uso</a>
+              </p>
+            </div>
+
+
+            <div className="flex items-center gap-6">
+              <span className="text-brandLight text-sm font-medium hidden sm:inline">Síguenos:</span>
+              <div className="flex gap-3">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative w-11 h-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-white transition-all duration-300 transform hover:scale-110"
+                    aria-label={social.name}
+                  >
+                    <div className="text-white group-hover:text-brandBlue transition-colors duration-300">
+                      {social.icon}
+                    </div>
+
+
+                    <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-black text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none font-medium shadow-lg">
+                      {social.name}
+                      <svg className="absolute top-full left-1/2 -translate-x-1/2 -mt-px" width="8" height="4" viewBox="0 0 8 4" fill="white">
+                        <path d="M0 0L4 4L8 0H0Z" />
+                      </svg>
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,88 +1,245 @@
-import { Link, usePage } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
+import { Link, usePage, router } from '@inertiajs/react';
+import { useState, useEffect, useRef } from 'react';
+import ParteArriba from './Header/partearriba';
+import NavLink from './Header/Navlink';
 
-export default function Header({ auth }) {
-  const { props } = usePage();
-  const [flashMessage, setFlashMessage] = useState(null);
+function UserAvatar({ name, size = 'md' }) {
+  const initials = name
+    ? name.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()
+    : '?';
+  const sizeClasses = size === 'sm' ? 'w-8 h-8 text-xs' : 'w-10 h-10 text-sm';
+  return (
+    <div className={`${sizeClasses} rounded-full bg-white text-brandBlue font-bold flex items-center justify-center flex-shrink-0`}>
+      {initials}
+    </div>
+  );
+}
+
+function UserDropdown({ user }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
 
   useEffect(() => {
-    if (props?.flash?.success) {
-      setFlashMessage({ type: 'success', message: props.flash.success });
-      setTimeout(() => setFlashMessage(null), 2000);
-    } else if (props?.flash?.error) {
-      setFlashMessage({ type: 'error', message: props.flash.error });
-      setTimeout(() => setFlashMessage(null), 3000);
-    }
-  }, [props]);
+    const handleClick = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
+
+  const handleLogout = () => {
+    router.post(route('logout'));
+  };
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-2 rounded-full pl-1 pr-3 py-1 bg-white/10 hover:bg-white/20 transition-colors duration-200 border border-white/20"
+      >
+        <UserAvatar name={user.name} size="sm" />
+        <span className="text-sm font-semibold text-white hidden xl:block max-w-[120px] truncate">
+          {user.name}
+        </span>
+        <svg
+          className={`w-4 h-4 text-white/70 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {open && (
+        <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-1 z-50 animate-fade-in">
+
+          <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-3">
+            <UserAvatar name={user.name} />
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-gray-900 truncate">{user.name}</p>
+              <p className="text-xs text-gray-500 truncate">{user.email}</p>
+            </div>
+          </div>
+
+          <div className="py-1">
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors duration-150"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Cerrar sesión
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function Header() {
+  const { navCategories = [], auth } = usePage().props;
+  const user = auth?.user;
+
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleLogout = () => {
+    router.post(route('logout'));
+  };
 
   return (
     <>
-      <header className="w-full bg-darkGray text-black shadow-lg py-4 border-b-2 border-black">
+      <ParteArriba />
+      <header
+        className={`w-full animate-blurred-fade-in bg-brandBlue shadow-md transition-all duration-300 sticky top-0 z-50 ${isScrolled ? 'py-2' : 'py-4'
+          }`}
+      >
         <div className="container mx-auto flex justify-between items-center px-6">
 
-
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/" className="flex items-center">
             <img
-              src="https://res.cloudinary.com/dnbklbswg/image/upload/v1765627552/Captura_de_pantalla_2025-12-13_075927-removebg-preview_m4lqsz.png"
-              alt="Logo de la tienda"
-              className="h-20 w-40 md:h-40 md:w-72 object-contain transition-transform duration-300 hover:scale-105 drop-shadow-lg"
+              src="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg"
+              alt="FABROS | Nibol Logo"
+              className={`transition-all duration-300 object-contain ${isScrolled ? 'h-12 w-32 md:h-14 md:w-40' : 'h-16 w-40 md:h-20 md:w-56'
+                }`}
             />
           </Link>
 
+          <nav className="hidden lg:flex items-center gap-8 font-semibold text-white">
 
-          <nav className="flex md:text-xl md:gap-10 text-xs gap-1 font-medium">
-            <Link
-              href="/Contacto"
-              className="
-      relative
-      text-xl
-      font-semibold
-      text-grayCustom
-      transition-all
-      duration-300
-      hover:text-turquoise
+            {navCategories
+              .filter((cat) => cat.slug === "vehiculos")
+              .map((cat) => (
+                <NavLink key={cat.id} href={`/products/${cat.slug}`}>
+                  {cat.name}
+                </NavLink>
+              ))}
 
-      after:absolute
-      after:left-0
-      after:-bottom-1
-      after:h-[2px]
-      after:w-0
-      after:bg-darkTurquoise
-      after:transition-all
-      after:duration-300
-      hover:after:w-full
-    "
+            <a
+              href="https://www.busesycamiones.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-brandLight transition-colors duration-300"
             >
-              Contacto
-            </Link>
+              BUSES Y CAMIONES
+            </a>
+
+            {navCategories
+              .filter((cat) => cat.slug !== "vehiculos")
+              .map((cat) => (
+                <NavLink key={cat.id} href={`/products/${cat.slug}`}>
+                  {cat.name}
+                </NavLink>
+              ))}
+
+            {user ? (
+              <UserDropdown user={user} />
+            ) : (
+              <Link
+                href="/login"
+                className="flex items-center gap-2 bg-white text-brandBlue px-5 py-2 rounded-lg text-sm font-semibold hover:bg-brandLight transition-colors duration-300"
+              >
+                Iniciar sesión
+              </Link>
+            )}
           </nav>
 
+          <button
+            className="lg:hidden text-white hover:text-brandLight transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+        </div>
+
+
+        <div
+          className={`lg:hidden overflow-hidden transition-all duration-300 ${mobileMenuOpen ? 'max-h-screen border-t border-brandLight/30' : 'max-h-0'
+            }`}
+        >
+          <nav className="container mx-auto px-6 py-4 flex flex-col gap-3">
+
+            {navCategories
+              .filter((cat) => cat.slug === "vehiculos")
+              .map((cat) => (
+                <Link
+                  key={cat.id}
+                  href={`/products/${cat.slug}`}
+                  className="text-white hover:text-brandLight font-semibold transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {cat.name}
+                </Link>
+              ))}
+
+            <a
+              href="https://www.busesycamiones.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-brandLight font-semibold transition-colors py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              BUSES Y CAMIONES
+            </a>
+
+            {navCategories
+              .filter((cat) => cat.slug !== "vehiculos")
+              .map((cat) => (
+                <Link
+                  key={cat.id}
+                  href={`/products/${cat.slug}`}
+                  className="text-white hover:text-brandLight font-semibold transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {cat.name}
+                </Link>
+              ))}
+
+            {user ? (
+              <div className="border-t border-white/20 pt-3 mt-1">
+                <div className="flex items-center gap-3 mb-3">
+                  <UserAvatar name={user.name} size="sm" />
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-white truncate">{user.name}</p>
+                    <p className="text-xs text-white/60 truncate">{user.email}</p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2 rounded-lg text-sm font-semibold transition-colors duration-200"
+                >
+                  Cerrar sesión
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="flex items-center gap-2 bg-white text-brandBlue px-5 py-2 rounded-lg text-sm font-semibold hover:bg-brandLight transition-colors duration-300"
+              >
+                Iniciar sesión
+              </Link>
+            )}
+          </nav>
         </div>
       </header>
-
-
-      {flashMessage && (
-        <div
-          className={`fixed top-20 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 
-            ${flashMessage.type === 'success' ? 'bg-black text-white' : 'bg-red-600 text-white'} 
-            px-6 py-4 rounded-lg shadow-xl animate-slideDown`}
-        >
-          {flashMessage.message}
-        </div>
-      )}
-
-      {/* Animación */}
-      <style>
-        {`
-          @keyframes slideDown {
-            0% { opacity: 0; transform: translateY(-20px) translateX(-50%); }
-            100% { opacity: 1; transform: translateY(0) translateX(-50%); }
-          }
-          .animate-slideDown {
-            animation: slideDown 0.5s ease-out forwards;
-          }
-        `}
-      </style>
     </>
   );
 }
