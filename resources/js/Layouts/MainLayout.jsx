@@ -22,7 +22,7 @@ export default function Layout({ title, auth, children }) {
         <Footer />
 
         <a
-          href="https://wa.me/56978843627"
+          href="https://wa.me/59174161243"
           target="_blank"
           rel="noopener noreferrer"
           className="

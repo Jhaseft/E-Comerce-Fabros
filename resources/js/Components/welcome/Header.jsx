@@ -41,9 +41,6 @@ function UserDropdown({ user }) {
         className="flex items-center gap-2 rounded-full pl-1 pr-3 py-1 bg-white/10 hover:bg-white/20 transition-colors duration-200 border border-white/20"
       >
         <UserAvatar name={user.name} size="sm" />
-        <span className="text-sm font-semibold text-white hidden xl:block max-w-[120px] truncate">
-          {user.name}
-        </span>
         <svg
           className={`w-4 h-4 text-white/70 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
           fill="none" stroke="currentColor" viewBox="0 0 24 24"

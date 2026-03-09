@@ -39,12 +39,7 @@ export default function AdminDashboard({ categories = [] }) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 w-full max-w-4xl">
 
-          <Link
-            href="/admin/Ventas" 
-            className="px-6 py-4 bg-white rounded-2xl shadow-lg text-base sm:text-lg font-semibold text-black  transition w-full"
-          >
-            Ventas
-          </Link>
+
           <button
             onClick={() => scrollToSection(section1Ref)}
             className="px-6 py-4 bg-white rounded-2xl shadow-lg text-base sm:text-lg font-semibold text-gray-800 hover:bg-pink-100 transition w-full"

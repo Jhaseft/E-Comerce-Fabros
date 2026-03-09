@@ -103,7 +103,7 @@ const [adding, setAdding] = useState(false);
 
 
               <a
-                href={`https://wa.me/56978843627?text=Hola!%20Estoy%20interesado%20en%20comprar:%0A${encodeURIComponent(
+                href={`https://wa.me/59174161243?text=Hola!%20Estoy%20interesado%20en%20comprar:%0A${encodeURIComponent(
                   product.name
                 )}%0A${encodeURIComponent(currentUrl)}`}
                 target="_blank"

@@ -8,7 +8,7 @@ use App\Models\ProductMultimedia;
 use Inertia\Inertia;
 use Cloudinary\Api\Upload\UploadApi;
 use Illuminate\Http\Request;
-
+ 
 class AdminCategoryProductsController extends Controller
 {
     // Mostrar productos de una categoría
@@ -18,7 +18,7 @@ class AdminCategoryProductsController extends Controller
 
         $products = Product::where('category_id', $categoryId)
             ->with(['multimedia', 'variants.values.attribute'])
-            ->select('id', 'name', 'description', 'price', 'available')
+            ->select('id', 'name', 'description','longDescription','precio_anterior','precio_actual', 'available')
             ->paginate(6)
             ->onEachSide(1);
 
@@ -35,16 +35,20 @@ class AdminCategoryProductsController extends Controller
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
+            'longDescription' => 'nullable|string',
+            'precio_anterior' => 'nullable|numeric|min:0',
+            'precio_actual' => 'nullable|numeric|min:0',
             'files' => 'nullable|array|max:10',
-            'files.*' => 'file|max:51200|mimes:jpeg,jpg,png,gif,mp4,mov,avi',
+            'files.*' => 'file|max:51200|mimes:jpeg,jpg,png,gif,webp,mp4,mov,avi',
         ]);
 
         $product = Product::create([
             'category_id' => $request->category_id,
             'name' => $request->name,
             'description' => $request->description,
-            'price' => $request->price,
+            'longDescription' => $request->longDescription,
+            'precio_anterior' => $request->precio_anterior ?: null,
+            'precio_actual' => $request->precio_actual ?: null,
             'available' => 1,
         ]);
 
@@ -62,15 +66,23 @@ class AdminCategoryProductsController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
+            'longDescription' => 'nullable|string',
+            'precio_anterior' => 'nullable|numeric|min:0',
+            'precio_actual' => 'nullable|numeric|min:0',
             'files' => 'nullable|array|max:10',
-            'files.*' => 'file|max:51200|mimes:jpeg,jpg,png,gif,mp4,mov,avi',
+            'files.*' => 'file|max:51200|mimes:jpeg,jpg,png,gif,webp,mp4,mov,avi',
             'removed_media_ids' => 'nullable|array',
             'removed_media_ids.*' => 'exists:product_multimedia,id',
         ]);
 
         // Actualizar datos del producto
-        $product->update($request->only('name', 'description', 'price'));
+        $product->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'longDescription' => $request->longDescription,
+            'precio_anterior' => $request->precio_anterior ?: null,
+            'precio_actual' => $request->precio_actual ?: null,
+        ]);
 
         // Eliminar multimedia removida
         if ($request->filled('removed_media_ids')) {
@@ -123,10 +135,13 @@ class AdminCategoryProductsController extends Controller
                 'resource_type' => $resourceType
             ]);
 
+            // Las imágenes subidas desde el formulario de producto son tipo "General" (multimedia_type_id = 1)
             ProductMultimedia::create([
                 'product_id' => $product->id,
                 'url' => $upload['secure_url'],
                 'type' => $resourceType,
+                'multimedia_type_id' => 1, // General
+                'sort_order' => 0,
             ]);
         }
     }

@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
+import PaymentProofModal from "./PaymentProofModal";
 import ViewOrderModal from "./ViewOrderModal";
 import EditOrderModal from "./EditOrderModal";
 import GlobalSpinner from "./GlobalSpinner";
-import { Printer,Trash2,Pencil,Eye } from 'lucide-react';
+
 export default function OrdersSection() {
   const [orders, setOrders] = useState(null);
   const [loading, setLoading] = useState(true);
   const [globalLoading, setGlobalLoading] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [editOrder, setEditOrder] = useState(null);
+  const [proofUrl, setProofUrl] = useState(null);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
 
@@ -19,7 +21,7 @@ export default function OrdersSection() {
         `/admin/orders?page=${page}&search=${encodeURIComponent(search)}`
       );
       const data = await res.json();
-      
+      console.log(data);
       setOrders(data);
       
     } catch (err) {
@@ -37,6 +39,7 @@ export default function OrdersSection() {
     if (!confirm("¿Seguro quieres eliminar esta orden?")) return;
     try {
       setGlobalLoading(true);
+
       const csrfToken = document
         .querySelector('meta[name="csrf-token"]')
         .getAttribute("content");
@@ -102,43 +105,6 @@ export default function OrdersSection() {
     }
   };
 
-  const Print = async (id) => {
-  try {
-    setGlobalLoading(true);
-
-    const csrfToken = document
-      .querySelector('meta[name="csrf-token"]')
-      .getAttribute("content");
-
-    const res = await fetch(`/admin/print/${id}`, {
-      method: "GET",
-      headers: {
-        "X-CSRF-TOKEN": csrfToken,
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error("Error al generar PDF");
-    }
-
-    const blob = await res.blob();
-    const url = window.URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `orden_${id}.pdf`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    window.URL.revokeObjectURL(url);
-  } catch (err) {
-    console.error(err);
-  } finally {
-    setGlobalLoading(false);
-  }
-};
-
   return (
     <div className="bg-white rounded-2xl shadow-xl p-4 max-w-7xl w-full">
       <GlobalSpinner visible={globalLoading} />
@@ -203,34 +169,54 @@ export default function OrdersSection() {
                   <td className="text-center border px-2">{order.status?.name || "-"}</td>
                   <td className="text-center border px-2">{order.total} $</td>
 
-                  <td className="px-2 py-2 border flex flex-wrap gap-1 justify-center">
-                    <button
-                      className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                      onClick={() => openViewModal(order.id)}
-                    >
-                      <Eye size={18} />
-                    </button>
+                  <td className="px-2 py-2 border">
+                    <div className="flex flex-wrap gap-1 justify-center">
+                      {/* Ver */}
+                      <button
+                        title="Ver pedido"
+                        className="p-1.5 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        onClick={() => openViewModal(order.id)}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                      </button>
 
-                    <button
-                      className="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-                      onClick={() => openEditModal(order.id)}
-                    >
-                      <Pencil size={18} />
-                    </button>
+                      {/* Editar */}
+                      <button
+                        title="Editar pedido"
+                        className="p-1.5 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+                        onClick={() => openEditModal(order.id)}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                      </button>
 
-                    <button
-                      className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-                      onClick={() => deleteOrder(order.id)}
-                    >
-                      <Trash2 size={18} />
-                    </button>
+                 
+                      {order.payment_proof && (
+                        <button
+                          title="Ver comprobante"
+                          className="p-1.5 bg-green-500 text-white rounded hover:bg-green-600"
+                          onClick={() => setProofUrl(`${order.payment_proof}`)}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                        </button>
+                      )}
 
-                    <button
-                      className="px-2 py-1 bg-purple-600 text-white rounded hover:bg-purple-700"
-                      onClick={() => Print(order.id)}
-                    >
-                      <Printer size={18} />
-                    </button>
+                      <button
+                        title="Eliminar pedido"
+                        className="p-1.5 bg-red-500 text-white rounded hover:bg-red-600"
+                        onClick={() => deleteOrder(order.id)}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))
@@ -275,6 +261,10 @@ export default function OrdersSection() {
           onSave={saveEdit}
           onClose={() => setEditOrder(null)}
         />
+      )}
+
+      {proofUrl && (
+        <PaymentProofModal url={proofUrl} onClose={() => setProofUrl(null)} />
       )}
     </div>
   );

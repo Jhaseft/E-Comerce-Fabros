@@ -27,7 +27,7 @@ export default function Contacto() {
                         <FaInstagram size={50} />
                     </a>
                     <a 
-                        href="https://wa.me/56978843627" 
+                        href="https://wa.me/59174161243" 
                         target="_blank" 
                         rel="noopener noreferrer" 
                         className="text-turquoise hover:text-darkTurquoise transition-colors"

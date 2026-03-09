@@ -18,7 +18,6 @@ export default function ViewOrderModal({ order, onClose }) {
               <tr>
                 <th className="py-2 px-3 border-b">Imagen</th>
                 <th className="py-2 px-3 border-b">Producto</th>
-                <th className="py-2 px-3 border-b">SKU</th>
                 <th className="py-2 px-3 border-b">Precio Unit.</th>
                 <th className="py-2 px-3 border-b">Cantidad</th>
                 <th className="py-2 px-3 border-b">Subtotal</th>
@@ -48,7 +47,6 @@ export default function ViewOrderModal({ order, onClose }) {
                          {item.variant_value} {/* valor de variante o fallback sku */}
                       </div>
                     </td>
-                    <td className="py-2 px-3 border-b">{item.sku}</td>
                     <td className="py-2 px-3 border-b">{price.toFixed(0)} $</td>
                     <td className="py-2 px-3 border-b">{item.quantity}</td>
                     <td className="py-2 px-3 border-b">{subtotal.toFixed(0)} $</td>
@@ -58,7 +56,7 @@ export default function ViewOrderModal({ order, onClose }) {
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan="5" className="py-2 px-3 font-semibold text-right border-t">Total:</td>
+                <td colSpan="4" className="py-2 px-3 font-semibold text-right border-t">Total:</td>
                 <td className="py-2 px-3 font-semibold border-t">{total.toFixed(0)} $</td>
               </tr>
             </tfoot>

@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Head, router } from "@inertiajs/react";
+import { Head, router,Link } from "@inertiajs/react";
 import ProductFormModal from "@/Components/admin/Categorias/ProductFormModal";
 import ProductVariantsModal from "@/Components/admin/Categorias/ProductVariantsModal";
 
 export default function CategoryProducts({ category, products }) {
+  console.log(products);
+  console.log(category);
   const [productList, setProductList] = useState(products.data);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
@@ -60,7 +62,7 @@ const [currentProduct, setCurrentProduct] = useState(null);
     <section className="px-4 sm:px-6 lg:px-8 py-6 relative">
       <Head title={`Productos de ${category.name}`} />
 
-      {/* Spinner fullscreen durante eliminación */}
+      
       {deleting && (
         <div className="fixed inset-0 bg-white bg-opacity-90 flex flex-col justify-center items-center z-50">
           <div className="w-16 h-16 border-4 border-t-pink-600 border-gray-300 rounded-full animate-spin mb-4"></div>
@@ -68,7 +70,6 @@ const [currentProduct, setCurrentProduct] = useState(null);
         </div>
       )}
 
-      {/* Mensaje fullscreen */}
       {fullscreenMessage && !deleting && (
         <div className="fixed inset-0 bg-white bg-opacity-95 flex justify-center items-center z-50 animate-fade">
           <p className="text-2xl font-bold text-green-600">{fullscreenMessage}</p>
@@ -125,9 +126,7 @@ const [currentProduct, setCurrentProduct] = useState(null);
                 {product.description || "Sin descripción"}
               </p>
 
-              <p className="text-gray-700 dark:text-gray-100 mt-2 font-bold text-base sm:text-lg">
-                $ {Number(product.price).toFixed(0)}
-              </p>
+          
 
               <div className="flex gap-2 mt-4">
                 <button
@@ -148,6 +147,22 @@ const [currentProduct, setCurrentProduct] = useState(null);
                 >
                   Eliminar
                 </button>
+
+                <Link href={`/admin/productos/${product.id}/caracteristicas`} >
+                <button
+                  className="px-2 py-1 bg-green-900 text-white rounded hover:bg-red-600 text-sm"
+                >
+                  Caracteristicas
+                </button>
+                </Link>
+
+                <Link href={`/admin/productos/${product.id}/multimedia`} >
+                <button
+                  className="px-2 py-1 bg-violet-800 text-white rounded hover:bg-red-600 text-sm"
+                >
+                  Multimedia
+                </button>
+                </Link>
               </div>
             </div>
           </div>
