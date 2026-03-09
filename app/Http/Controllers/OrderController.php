@@ -98,11 +98,10 @@ public function update(Request $request, Order $order)
         'delivery_date',
         'delivery_time'
     ]));
-
+ 
     //  Cargar relaciones necesarias
     $order->load([
-    'items.product',
-    'items.variant.values.attribute'
+        'items.product',
     ]);
 
     // =============================
