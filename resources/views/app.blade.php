@@ -6,26 +6,26 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Título dinámico -->
-    <title inertia>{{ config('app.name', 'Maro Uniformes') }}</title>
+    <title inertia>{{ config('app.name', 'FABROS  Bolivia') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="https://res.cloudinary.com/dnbklbswg/image/upload/v1765634166/Captura_de_pantalla_2025-12-13_075927_sujhuc.png" type="image/png">
+    <link rel="icon" href="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg" type="image/jpeg">
 
     <!-- Fuente principal -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Meta Open Graph para redes sociales -->
-    <meta property="og:title" content="Maro Uniformes" />
-    <meta property="og:description" content="Uniformes de calidad en Concepción, Chile" />
-    <meta property="og:image" content="https://res.cloudinary.com/dnbklbswg/image/upload/v1765634166/Captura_de_pantalla_2025-12-13_075927_sujhuc.png" />
+    <meta property="og:title" content="FABROS  Bolivia" />
+    <meta property="og:description" content="Autos de calidad disponibles en Bolivia" />
+    <meta property="og:image" content="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg" />
     <meta property="og:url" content="{{ url('/') }}" />
     <meta property="og:type" content="website" />
 
     <!-- Meta para Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Maro Uniformes" />
-    <meta name="twitter:description" content="Ofrecemos uniformes de calidad en Concepción, Chile" />
-    <meta name="twitter:image" content="https://res.cloudinary.com/dnbklbswg/image/upload/v1765634166/Captura_de_pantalla_2025-12-13_075927_sujhuc.png" />
+    <meta name="twitter:title" content="FABROS  Bolivia" />
+    <meta name="twitter:description" content="Ofrecemos autos de calidad en Bolivia" />
+    <meta name="twitter:image" content="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg" />
 
     <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.bunny.net">

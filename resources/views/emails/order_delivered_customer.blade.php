@@ -20,8 +20,8 @@
                         <!-- Logo -->
                         <div style="text-align:center; margin-bottom:25px;">
                             <img
-                                src="https://res.cloudinary.com/dnbklbswg/image/upload/v1765627552/Captura_de_pantalla_2025-12-13_075927-removebg-preview_m4lqsz.png"
-                                alt="Maro"
+                                src="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg"
+                                alt="FABROS Bolivia"
                                 style="width:150px;"
                             >
                         </div>
@@ -108,7 +108,7 @@
                         <p style="margin-top:30px; text-align:center; color:#bfbfbf; font-size:13px;">
                             Puedes pasar a recogerlo en nuestro punto de retiro.<br><br>
                             ¡Esperamos verte pronto nuevamente! 🤍<br>
-                            <strong style="color:#ffffff;">Maro</strong>
+                            <strong style="color:#ffffff;">FABROS Bolivia</strong>
                         </p>
 
                     </td>

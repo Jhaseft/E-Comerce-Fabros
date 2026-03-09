@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Pedido Maro</title>
+    <title>Pedido FABROS Bolivia</title>
 </head> 
 
 <body style="margin:0; padding:0; background-color:#f2f2f2; font-family:Arial, sans-serif;">
@@ -21,8 +21,8 @@
                         <!-- Logo -->
                         <div style="text-align:center; margin-bottom:25px;">
                             <img
-                                src="https://res.cloudinary.com/dnbklbswg/image/upload/v1765627552/Captura_de_pantalla_2025-12-13_075927-removebg-preview_m4lqsz.png"
-                                alt="Maro"
+                                src="https://res.cloudinary.com/dnbklbswg/image/upload/v1772254126/WhatsApp_Image_2026-02-26_at_16.11.57_futjnf_vukjzp.jpg"
+                                alt="FABROS Bolivia"
                                 style="width:150px;"
                             >
                         </div>
@@ -137,7 +137,7 @@
 
                         <!-- Footer -->
                         <p style="margin-top:30px; text-align:center; color:#bfbfbf; font-size:13px;">
-                            Gracias por confiar en <strong style="color:#ffffff;">Maro</strong> 🤍<br>
+                            Gracias por confiar en <strong style="color:#ffffff;">FABROS Bolivia</strong> 🤍<br>
                             Cualquier duda, estamos para ayudarte.
                         </p>
 

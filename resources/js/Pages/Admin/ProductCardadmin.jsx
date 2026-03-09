@@ -1,5 +1,5 @@
 import { Link } from "@inertiajs/react";
-import { slugify } from "../../utils/slugify";
+import { slugify } from "@/Pages/utils/slugify";
 
 export default function ProductCardadmin({ product }) {
   const totalStock = product.variants?.reduce((sum, v) => sum + v.stock, 0) || 0;
