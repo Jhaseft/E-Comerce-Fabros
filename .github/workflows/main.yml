@@ -12,4 +12,4 @@ jobs:
     steps:
       - name: Trigger EasyPanel Deploy
         run: |
-          curl -X POST http://206.183.130.17:3000/api/deploy/ba1952c9709ea911495cf0e13daa1715f1b5363ecd6d5895
+          curl -X POST http://206.183.130.17:3000/api/deploy/e475d9285f9c411a1f5cb1e3a24e0ea8c1430ecc58fd49ff
