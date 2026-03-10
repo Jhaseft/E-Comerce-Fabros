@@ -72,25 +72,26 @@ class PedidosController extends Controller
                 ]);
             }
 
-            // // Preparar datos para el correo
-            // $itemsForMail = [
-            //     [
-            //         'name' => $product->nombre ?? 'Producto',
-            //         'quantity' => $request->quantity,
-            //         'price' => round($price, 2),
-            //         'subtotal' => round($subtotal, 2),
-            //     ]
-            // ];
+            // Preparar datos para el correo
+            $itemsForMail = [
+                [
+                    'name' => $product->nombre ?? 'Producto',
+                    'quantity' => $request->quantity,
+                    'price' => round($price, 2),
+                    'subtotal' => round($subtotal, 2),
+                ]
+            ];
 
-            // //  Enviar correo al cliente + copia admin
-            // try {
+            //  Enviar correo al cliente + copia admin
+            try {
 
-            //     Mail::to($order->customer_email)
-            //         ->send(new OrderConfirmation($order, $itemsForMail));
+                Mail::to($order->customer_email)
+                    ->send(new OrderConfirmation($order, $itemsForMail));
 
-            // } catch (\Exception $mailError) {
-            //     Log::error("Error enviando correo pedido directo: " . $mailError->getMessage());
-            // }
+            } catch (\Exception $mailError) {
+                Log::error("Error enviando correo pedido directo: " . $mailError->getMessage());
+            }
+            
             Cart::destroy();
             DB::commit();
 
