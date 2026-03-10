@@ -73,14 +73,14 @@ class PedidosController extends Controller
             }
 
             // Preparar datos para el correo
-            $itemsForMail = [
-                [
-                    'name' => $product->nombre ?? 'Producto',
-                    'quantity' => $request->quantity,
-                    'price' => round($price, 2),
-                    'subtotal' => round($subtotal, 2),
-                ]
-            ];
+            $itemsForMail = array_map(function ($item) {
+                return [
+                    'name'     => $item['nombre'] ?? $item['name'] ?? 'Producto',
+                    'quantity' => $item['quantity'],
+                    'price'    => round($item['price'], 2),
+                    'subtotal' => round($item['subtotal'], 2),
+                ];
+            }, $cartItems);
 
             //  Enviar correo al cliente + copia admin
             try {
