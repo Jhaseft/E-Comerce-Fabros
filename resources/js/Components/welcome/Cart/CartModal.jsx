@@ -2,6 +2,7 @@ import { X, Minus, Plus, Trash2, ShoppingCart } from 'lucide-react';
 import { useCart } from '@/Contexts/CartContext';
 import { Link } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
+import { CURRENCY_SYMBOL } from '@/utils/currency';
 
 export default function CartModal({ isOpen, onClose }) {
   const { cart, total, removeFromCart, updateQuantity, clearCart } = useCart();
@@ -132,7 +133,7 @@ export default function CartModal({ isOpen, onClose }) {
 
                     <div className="text-right shrink-0">
                       <p className="font-bold text-blue-400 text-sm">
-                        $ {(item.price * item.qty).toLocaleString('es-AR')}
+                        {CURRENCY_SYMBOL} {(item.price * item.qty).toLocaleString('es-AR')}
                       </p>
                       <button
                         onClick={() => removeFromCart(item.rowId)}
@@ -154,7 +155,7 @@ export default function CartModal({ isOpen, onClose }) {
             <div className="flex justify-between items-center mb-4">
               <span className="text-gray-400 font-medium">Total</span>
               <span className="text-2xl font-bold text-white">
-                $ {total.toLocaleString('es-AR')}
+                {CURRENCY_SYMBOL} {total.toLocaleString('es-AR')}
               </span>
             </div>
 

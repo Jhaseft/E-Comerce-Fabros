@@ -3,6 +3,7 @@ import PaymentProofModal from "./PaymentProofModal";
 import ViewOrderModal from "./ViewOrderModal";
 import EditOrderModal from "./EditOrderModal";
 import GlobalSpinner from "./GlobalSpinner";
+import { CURRENCY_SYMBOL } from "@/utils/currency";
 
 export default function OrdersSection() {
   const [orders, setOrders] = useState(null);
@@ -167,7 +168,7 @@ export default function OrdersSection() {
                     {order.payment_method?.name || "-"}
                   </td>
                   <td className="text-center border px-2">{order.status?.name || "-"}</td>
-                  <td className="text-center border px-2">{order.total} $</td>
+                  <td className="text-center border px-2">{order.total} {CURRENCY_SYMBOL}</td>
 
                   <td className="px-2 py-2 border">
                     <div className="flex flex-wrap gap-1 justify-center">

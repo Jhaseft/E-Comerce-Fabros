@@ -2,6 +2,7 @@ import { X, Minus, Plus, Trash2 } from 'lucide-react';
 import { useCart } from '@/Contexts/CartContext';
 import { useEffect, useState } from 'react';
 import { router } from '@inertiajs/react';
+import { CURRENCY_SYMBOL } from '@/utils/currency';
 
 
 export default function CartModaladmin({ isOpen, onClose }) {
@@ -131,7 +132,7 @@ export default function CartModaladmin({ isOpen, onClose }) {
                 </div>
                 <div className="text-right flex flex-col justify-between h-full">
                   <p className="font-bold">
-                    $ {(item.price * item.qty).toFixed(0)}
+                    {CURRENCY_SYMBOL} {(item.price * item.qty).toFixed(0)}
                   </p>
                   <button
                     className="text-gray-600 text-sm mt-1 hover:text-gray-800"
@@ -150,7 +151,7 @@ export default function CartModaladmin({ isOpen, onClose }) {
           <div className="mt-4 border-t border-gray-300 pt-4 flex flex-col gap-4">
             <p className="flex justify-between font-bold text-lg">
               <span>Total:</span>
-              <span>$ {total.toFixed(0)}</span>
+              <span>{CURRENCY_SYMBOL} {total.toFixed(0)}</span>
             </p>
 
 

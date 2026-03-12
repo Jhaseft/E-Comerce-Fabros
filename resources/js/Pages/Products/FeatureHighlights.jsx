@@ -1,11 +1,9 @@
+import { CURRENCY_SYMBOL } from "@/utils/currency";
+
 export default function FeatureHighlights({ precioAnterior, precioActual }) {
   const formatPrice = (price) => {
     if (!price && price !== 0) return null;
-    return new Intl.NumberFormat('es-CL', {
-      style: 'currency',
-      currency: 'CLP',
-      maximumFractionDigits: 0,
-    }).format(price);
+    return `${CURRENCY_SYMBOL} ${Number(price).toLocaleString('es-BO', { maximumFractionDigits: 0 })}`;
   };
 
   const formattedAnterior = formatPrice(precioAnterior);

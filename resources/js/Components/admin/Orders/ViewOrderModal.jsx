@@ -1,3 +1,5 @@
+import { CURRENCY_SYMBOL } from "@/utils/currency";
+
 export default function ViewOrderModal({ order, onClose }) {
   
 
@@ -47,9 +49,9 @@ export default function ViewOrderModal({ order, onClose }) {
                          {item.variant_value} {/* valor de variante o fallback sku */}
                       </div>
                     </td>
-                    <td className="py-2 px-3 border-b">{price.toFixed(0)} $</td>
+                    <td className="py-2 px-3 border-b">{price.toFixed(0)} {CURRENCY_SYMBOL}</td>
                     <td className="py-2 px-3 border-b">{item.quantity}</td>
-                    <td className="py-2 px-3 border-b">{subtotal.toFixed(0)} $</td>
+                    <td className="py-2 px-3 border-b">{subtotal.toFixed(0)} {CURRENCY_SYMBOL}</td>
                   </tr>
                 );
               })}
@@ -57,7 +59,7 @@ export default function ViewOrderModal({ order, onClose }) {
             <tfoot>
               <tr>
                 <td colSpan="4" className="py-2 px-3 font-semibold text-right border-t">Total:</td>
-                <td className="py-2 px-3 font-semibold border-t">{total.toFixed(0)} $</td>
+                <td className="py-2 px-3 font-semibold border-t">{total.toFixed(0)} {CURRENCY_SYMBOL}</td>
               </tr>
             </tfoot>
           </table>

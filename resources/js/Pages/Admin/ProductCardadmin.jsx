@@ -1,5 +1,6 @@
 import { Link } from "@inertiajs/react";
 import { slugify } from "@/Pages/utils/slugify";
+import { CURRENCY_SYMBOL } from "@/utils/currency";
 
 export default function ProductCardadmin({ product }) {
   const totalStock = product.variants?.reduce((sum, v) => sum + v.stock, 0) || 0;
@@ -44,7 +45,7 @@ export default function ProductCardadmin({ product }) {
         </div>
 
         <p className="text-2xl font-extrabold tracking-wide text-gray-900">
-          $ {Number(product.price).toFixed(0)}
+          {CURRENCY_SYMBOL} {Number(product.price).toFixed(0)}
         </p>
       </div>
     </Link>

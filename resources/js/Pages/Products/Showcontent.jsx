@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useCart } from "@/Contexts/CartContext";
 import ProductGallery from "./ProductGallery";
+import { CURRENCY_SYMBOL } from "@/utils/currency";
 
 export default function ShowProduct({ product }) {
 
@@ -74,7 +75,7 @@ export default function ShowProduct({ product }) {
       <div className="space-y-6 sticky top-0" style={{ fontFamily: "'Playfair Display', serif" }}>
         <h1 className="text-4xl font-extrabold uppercase text-turquoise">{product.name}</h1>
         <p className="text-3xl font-bold text-turquoise">
-          $ {Number(selectedVariant?.price ?? product.price).toFixed(0)}
+          {CURRENCY_SYMBOL} {Number(selectedVariant?.price ?? product.price).toFixed(0)}
         </p>
 
         {selectedVariant && (

@@ -1,4 +1,5 @@
 import { Link } from "@inertiajs/react";
+import { CURRENCY_SYMBOL } from "@/utils/currency";
 
 export default function ProductCard({ product }) {
   
@@ -72,7 +73,7 @@ export default function ProductCard({ product }) {
 
         
         <p className="text-2xl font-extrabold tracking-wide text-turquoise">
-          $ {Number(product.price).toFixed(0)}
+          {CURRENCY_SYMBOL} {Number(product.price).toFixed(0)}
         </p>
       </div>
     </Link>
