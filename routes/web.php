@@ -83,6 +83,10 @@ Route::prefix('admin')->group(function () {
         Route::delete('/products/{product}', [AdminCategoryProductsController::class, 'destroy'])
             ->name('admin.products.destroy');
 
+        // Eliminar producto junto con sus órdenes
+        Route::delete('/products/{product}/with-orders', [AdminCategoryProductsController::class, 'destroyWithOrders'])
+            ->name('admin.products.destroyWithOrders');
+
         // Eliminar multimedia de un producto
         Route::delete('/products/{product}/multimedia/{media}', [AdminCategoryProductsController::class, 'destroyMultimedia'])
             ->name('admin.products.multimedia.destroy');

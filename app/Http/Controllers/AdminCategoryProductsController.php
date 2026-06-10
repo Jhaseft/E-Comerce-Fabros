@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductMultimedia;
+use App\Models\OrderItem;
+use App\Models\Order;
 use Inertia\Inertia;
 use Cloudinary\Api\Upload\UploadApi;
 use Illuminate\Http\Request;
@@ -101,6 +103,41 @@ class AdminCategoryProductsController extends Controller
     // Eliminar producto completo
     public function destroy(Product $product)
     {
+        $orders = OrderItem::where('product_id', $product->id)
+            ->with('order')
+            ->get()
+            ->pluck('order')
+            ->unique('id')
+            ->values();
+
+        if ($orders->isNotEmpty()) {
+            return response()->json([
+                'status'  => 'has_orders',
+                'message' => 'Este producto tiene órdenes asociadas.',
+                'orders'  => $orders,
+            ], 422);
+        }
+
+        $this->deleteProductData($product);
+
+        return response()->json(['status' => 'success']);
+    }
+
+    // Eliminar producto junto con sus órdenes asociadas
+    public function destroyWithOrders(Product $product)
+    {
+        $orderIds = OrderItem::where('product_id', $product->id)->pluck('order_id')->unique();
+
+        OrderItem::where('product_id', $product->id)->delete();
+        Order::whereIn('id', $orderIds)->whereDoesntHave('items')->delete();
+
+        $this->deleteProductData($product);
+
+        return response()->json(['status' => 'success']);
+    }
+
+    private function deleteProductData(Product $product)
+    {
         $product->multimedia()->delete();
 
         foreach ($product->variants as $variant) {
@@ -109,8 +146,6 @@ class AdminCategoryProductsController extends Controller
         }
 
         $product->delete();
-
-        return response()->json(['status' => 'success']);
     }
 
     // Eliminar multimedia individual

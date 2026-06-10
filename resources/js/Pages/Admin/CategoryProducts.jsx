@@ -9,10 +9,11 @@ export default function CategoryProducts({ category, products }) {
   const [productList, setProductList] = useState(products.data);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
-  const [fullscreenMessage, setFullscreenMessage] = useState(null); // mensaje fullscreen
-  const [deleting, setDeleting] = useState(false); // spinner durante eliminación
+  const [fullscreenMessage, setFullscreenMessage] = useState(null);
+  const [deleting, setDeleting] = useState(false);
   const [variantModalOpen, setVariantModalOpen] = useState(false);
-const [currentProduct, setCurrentProduct] = useState(null);
+  const [currentProduct, setCurrentProduct] = useState(null);
+  const [ordersWarning, setOrdersWarning] = useState(null); // { productId, orders }
 
   const handleOpenVariantsModal = (product) => {
   setCurrentProduct(product);
@@ -31,30 +32,59 @@ const [currentProduct, setCurrentProduct] = useState(null);
     setTimeout(() => setFullscreenMessage(null), 2000);
   };
 
+  const csrfToken = () => document.querySelector('meta[name="csrf-token"]').content;
+
   // Eliminar producto con spinner
   const handleDeleteProduct = async (productId) => {
     if (!confirm("¿Eliminar producto?")) return;
 
-    setDeleting(true); // mostrar spinner
+    setDeleting(true);
     try {
       const res = await fetch(`/admin/products/${productId}`, {
         method: 'DELETE',
-        headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content }
+        headers: { 'X-CSRF-TOKEN': csrfToken() }
       });
       const json = await res.json();
       if (json.status === "success") {
         setProductList(prev => prev.filter(p => p.id !== productId));
         setFullscreenMessage("Producto eliminado correctamente.");
         setTimeout(() => setFullscreenMessage(null), 2000);
+      } else if (json.status === "has_orders") {
+        setOrdersWarning({ productId, orders: json.orders });
       } else {
         alert("Error al eliminar producto");
-        console.error(json);
       }
     } catch (err) {
       console.error(err);
       alert("Error en la solicitud");
     } finally {
-      setDeleting(false); // ocultar spinner
+      setDeleting(false);
+    }
+  };
+
+  // Eliminar producto junto con sus órdenes
+  const handleDeleteWithOrders = async () => {
+    const { productId } = ordersWarning;
+    setOrdersWarning(null);
+    setDeleting(true);
+    try {
+      const res = await fetch(`/admin/products/${productId}/with-orders`, {
+        method: 'DELETE',
+        headers: { 'X-CSRF-TOKEN': csrfToken() }
+      });
+      const json = await res.json();
+      if (json.status === "success") {
+        setProductList(prev => prev.filter(p => p.id !== productId));
+        setFullscreenMessage("Producto y órdenes eliminados correctamente.");
+        setTimeout(() => setFullscreenMessage(null), 2000);
+      } else {
+        alert("Error al eliminar");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error en la solicitud");
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -205,6 +235,42 @@ const [currentProduct, setCurrentProduct] = useState(null);
           product={currentProduct}
           onClose={() => setVariantModalOpen(false)}
         />
+      )}
+
+      {ordersWarning && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-xl p-6 max-w-md w-full mx-4">
+            <h3 className="text-xl font-bold text-red-600 mb-2">⚠ Producto con órdenes asociadas</h3>
+            <p className="text-gray-700 dark:text-gray-300 mb-4">
+              Este producto tiene <strong>{ordersWarning.orders.length}</strong> orden(es) asociada(s) y no puede eliminarse directamente.
+            </p>
+            <ul className="text-sm text-gray-600 dark:text-gray-400 mb-5 space-y-1 max-h-32 overflow-y-auto border rounded p-2">
+              {ordersWarning.orders.map(o => (
+                <li key={o.id}>• Orden #{o.id} — Estado: {o.status ?? o.estado ?? '—'}</li>
+              ))}
+            </ul>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => { setOrdersWarning(null); window.location.href = '/admin/dashboard'; }}
+                className="w-full px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 font-semibold"
+              >
+                Ver órdenes asociadas
+              </button>
+              <button
+                onClick={handleDeleteWithOrders}
+                className="w-full px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 font-semibold"
+              >
+                Eliminar producto y órdenes asociadas
+              </button>
+              <button
+                onClick={() => setOrdersWarning(null)}
+                className="w-full px-4 py-2 bg-gray-200 dark:bg-zinc-700 text-gray-800 dark:text-white rounded-xl hover:bg-gray-300 font-semibold"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </section>
   );
